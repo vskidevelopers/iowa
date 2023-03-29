@@ -26,12 +26,12 @@ function HomeBanner() {
       {/* <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 "></div> */}
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="absolute top-2.5   px-4 py-32 sm:px-6 flex w-full justify-center lg:h-screen lg:px-8">
-        <div className="text-white ">
+        <div className="text-white mt-5 ">
           <LogoSvg className="mb-5 " />
-          <div className="w-full flex justify-center md:mt-10">
+          <div className="w-full flex justify-center mt-10">
             <h1 className="font-serif uppercase text-md">Scroll For More</h1>
           </div>
-          <div className="w-full flex justify-center md:mt-5">
+          <div className="w-full flex justify-center mt-5">
             <ArrowDownCircleIcon className=" animate-bounce h-6 w-6 text-white " />
           </div>
         </div>
