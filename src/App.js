@@ -1,17 +1,19 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
+import { useEffect, useState } from "react";
+import SplashScreen from "./Components/SplashScreen";
+import Layout from "./Layout";
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-      <Footer />
-    </>
+    <div className="app">{showSplash ? <SplashScreen /> : <Layout />}</div>
   );
 }
 

@@ -28,12 +28,12 @@ export default function Navbar({ fixed }) {
     <>
       <nav
         className={`fixed top-0 z-10 flex flex-wrap items-center justify-between px-2 py-3 mb-3 w-full ${
-          isScrolled ? "bg-gray-300" : "bg-transparent"
+          isScrolled ? "bg-slate-900" : "bg-transparent"
         }`}
       >
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between ">
           <div className="w-full lg:w-1/5 relative flex lg:static lg:block justify-between">
-            <Link className="flex text-teal-600 items-center" to="/">
+            <Link className="flex text-emerald-600 items-center" to="/">
               <LogoSvg2 />
               <span className="ml-3 text-md font-normal font-serif ">
                 Iowa Eateries
