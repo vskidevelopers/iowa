@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoSvg2 } from "../Utils/Svgs";
+import { LogoSvg3 } from "../Utils/Svgs";
 import {
   UserIcon,
   HomeIcon,
@@ -13,13 +13,13 @@ function Footer({ comingSoon }) {
     <div className="w-full bg-slate-900/50">
       <div className="container px-5 md:py-10 md:mx-auto grid md:grid-cols-3 grid-cols-1 gap-6">
         <div className="text-white">
-          <LogoSvg2 className="w-full text-white" />
+          <LogoSvg3 />
         </div>
 
-        <div className="md:pl-10">
-          <h1 className="text-md font-medium text-white">Our Contacts</h1>
+        <div className="md:pl-10 flex justify-center flex-col pl-20 md:block">
+          <h1 className=" text-md font-medium text-white">Our Contacts</h1>
           <br />
-          <ul className="text-white">
+          <ul className=" text-white">
             <li className="flex items-center">
               <span>
                 <UserIcon className="h-4 w-4 mr-3" />
@@ -111,7 +111,7 @@ function Footer({ comingSoon }) {
               <button
                 onClick={comingSoon}
                 type="submit"
-                className="py-3 px-9 ml-3 text-white  border border-emerald-400 bg-emerald-400 hover:bg-emerald-800 transition duration-500 ease-in-out -500 font-bold"
+                className="py-3 w-full px-9  text-white  border border-emerald-400 bg-emerald-400 hover:bg-emerald-800 transition duration-500 ease-in-out -500 font-bold"
               >
                 Email Us Today!
               </button>

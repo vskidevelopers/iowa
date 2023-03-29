@@ -10,7 +10,7 @@ function Activity({ icon, name, description }) {
       <h3 className="flex justify-center md:block mt-3 text-lg font-medium text-emerald-600 sm:text-lg">
         {name}
       </h3>
-      <p className="flex justify-center md:block mt-4 text-sm text-slate-900">
+      <p className="text-center mt-4 text-sm text-slate-900 px-2">
         {description}
       </p>
     </div>

@@ -29,22 +29,22 @@ function Activities() {
         <Activity
           icon={<IconHanger2 />}
           name="Full board"
-          description="Lorem ipsum dolor sit amet, in nusquam omittantu."
+          description="Escape to luxurious comfort and relaxation with our premium rooms and suites."
         />
         <Activity
           icon={<IconMic />}
           name="Entertainment"
-          description="Lorem ipsum dolor sit amet, in nusquam omittantu."
+          description="Unwind and indulge in the vibrant nightlife of the Laikipia savannahs, only at Iowa Eateries."
         />
         <Activity
           icon={<IconGlassCocktail />}
           name="Open Bar"
-          description="Lorem ipsum dolor sit amet, in nusquam omittantu."
+          description="Sip and savor the finest selection of local and international wines and spirits at our world-class bar."
         />
         <Activity
           icon={<IconBullseyeArrow />}
           name="Game Spot"
-          description="Lorem ipsum dolor sit amet, in nusquam omittantu."
+          description="Have a blast with our exciting selection of games and entertainment options for a fun-filled stay"
         />
       </div>
     </div>

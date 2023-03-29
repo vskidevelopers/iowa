@@ -23,9 +23,10 @@ function Suites({ comingSoon }) {
           </h2>
           <br />
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum totam
-            eum accusantium assumenda. Velit enim numquam odit nostrum
-            reprehenderit esse consequatur nam,
+            Escape to the ultimate indulgence and relaxation at Iowa Eateries'
+            luxurious rooms, where every detail is crafted to perfection,
+            offering the perfect getaway experience for your next vacation or
+            business trip.
           </p>
           <br />
           <div className="mt-6">
