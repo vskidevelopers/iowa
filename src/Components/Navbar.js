@@ -27,8 +27,8 @@ export default function Navbar({ fixed }) {
   return (
     <>
       <nav
-        className={`fixed top-0 z-10 flex flex-wrap items-center justify-between px-2 py-3 mb-3 w-full ${
-          isScrolled ? "bg-slate-900" : "bg-transparent"
+        className={`fixed top-0 z-10 flex flex-wrap items-center justify-between px-2 py-3 mb-3 w-full shadow ${
+          isScrolled ? "bg-white" : "bg-transparent"
         }`}
       >
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between ">
@@ -67,7 +67,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/"
+                    to="/gallery"
                   >
                     <span className="ml-2">Gallery</span>
                   </Link>
