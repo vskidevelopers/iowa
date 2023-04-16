@@ -1,5 +1,6 @@
 import React from "react";
 import SwiperComponent from "./SwiperComponent";
+import { Link } from "react-router-dom";
 
 function Suites({ comingSoon }) {
   return (
@@ -30,12 +31,12 @@ function Suites({ comingSoon }) {
           </p>
           <br />
           <div className="mt-6">
-            <button
-              onClick={comingSoon}
+            <Link
+              to="/rooms"
               className="py-3 px-3 text-emerald-500  border border-emerald-500 hover:bg-emerald-600 transition duration-500 ease-in-out hover:text-white font-bold"
             >
               Book a Stay
-            </button>
+            </Link>
           </div>
         </div>
       </div>

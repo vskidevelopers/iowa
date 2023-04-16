@@ -10,7 +10,7 @@ export default function Navbar({ fixed }) {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
 
-      if (scrollTop > 200) {
+      if (scrollTop > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -75,7 +75,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/"
+                    to="/rooms"
                   >
                     <span className="ml-2">Rooms</span>
                   </Link>

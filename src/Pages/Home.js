@@ -25,7 +25,7 @@ function Home() {
       </div>
       <TimeDivider />
 
-      <DiscoverySection comingSoon={comingSoon} />
+      <DiscoverySection />
       <div className="bg-emerald-50 py-8">
         <Activities />
       </div>

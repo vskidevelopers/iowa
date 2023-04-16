@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import GalleryPage from "./Pages/GalleryPage";
+import Rooms from "./Pages/Rooms";
 
 function Layout() {
   return (
@@ -12,6 +13,7 @@ function Layout() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/rooms" element={<Rooms />} />
       </Routes>
       <Footer />
     </div>

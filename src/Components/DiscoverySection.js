@@ -2,6 +2,7 @@ import React from "react";
 import Img1 from "../Assets/Imgs/Discovery1.jpg";
 import Img2 from "../Assets/Imgs/Discovery2.jpg";
 import Img3 from "../Assets/Imgs/Discovery3.jpg";
+import { Link } from "react-router-dom";
 
 function DiscoverySection({ comingSoon }) {
   return (
@@ -23,12 +24,12 @@ function DiscoverySection({ comingSoon }) {
           <div className="h-full w-full flex justify-center items-start flex-col">
             <img src={Img1} alt="Discovery1" className=" w-full md:w-5/6" />
             <div className="relative bottom-12 w-full md:w-5/6 flex justify-center">
-              <button
-                onClick={comingSoon}
+              <Link
+                to="/gallery"
                 className=" rounded-full bg-emerald-700 h-28 w-28 flex justify-center items-center drop-shadow-lg"
               >
                 <p className="text-white font-medium ">See More</p>
-              </button>
+              </Link>
             </div>
           </div>
           {/* Image 2 */}
