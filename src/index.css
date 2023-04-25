@@ -19,7 +19,30 @@
   animation-iteration-count: infinite;
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-  opacity: 0.2;
+@media (max-width: 380px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important;
+  }
+  .swiper-button-next::after {
+    display: none !important;
+  }
 }
+
+.custom-img {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/iowa-a4fe8.appspot.com/o/galleryPage%2FDSC_0969-min.jpg?alt=media&token=a82b4438-a9c9-4a81-bdca-12c70555bf4b");
+}
+
+.rbc-month-header {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.rbc-month-view {
+  background-color: #ecfdf5;
+}
+
+/* .swiper-button-next:after,
+.swiper-button-prev:after {
+  display: none;
+} */

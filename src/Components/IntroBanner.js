@@ -34,7 +34,7 @@ function IntroBanner({ comingSoon }) {
       <div className="flex justify-center py-5">
         <button
           onClick={comingSoon}
-          className="py-5 px-9 text-emerald-500  border border-emerald-500 hover:bg-emerald-600 transition duration-500 ease-in-out hover:text-white font-bold"
+          className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold"
         >
           <p> Discover More</p>
         </button>

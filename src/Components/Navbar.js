@@ -27,7 +27,7 @@ export default function Navbar({ fixed }) {
   return (
     <>
       <nav
-        className={`fixed top-0 z-10 flex flex-wrap items-center justify-between px-2 py-3 mb-3 w-full shadow ${
+        className={`fixed top-0 z-20 flex flex-wrap items-center justify-between px-2 py-3 mb-3 w-full shadow ${
           isScrolled ? "bg-white" : "bg-transparent"
         }`}
       >
@@ -83,23 +83,23 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/"
+                    to="/menu"
                   >
-                    <span className="ml-2">Services</span>
+                    <span className="ml-2">Menu</span>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/"
+                    to="/events"
                   >
-                    <span className="ml-2">Blog</span>
+                    <span className="ml-2">Events</span>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/"
+                    to="/contact"
                   >
                     Contact Us
                   </Link>
