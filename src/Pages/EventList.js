@@ -11,7 +11,7 @@ function EventList() {
       />
       {/* Event List Body */}
       <div className="container mx-auto mt-28 px-20 my-20">
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <EventCard
             id="1"
             date="25 August, 2022"

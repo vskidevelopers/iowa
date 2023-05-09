@@ -67,7 +67,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/gallery"
+                    to="gallery"
                   >
                     <span className="ml-2">Gallery</span>
                   </Link>
@@ -112,14 +112,6 @@ export default function Navbar({ fixed }) {
                     to="/login"
                   >
                     <span className="ml-2">Login</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/signup"
-                  >
-                    <span className="ml-2">Register </span>
                   </Link>
                 </li>
               </ul>
