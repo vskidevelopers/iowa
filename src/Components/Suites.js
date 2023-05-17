@@ -30,10 +30,17 @@ function Suites({ comingSoon }) {
             business trip.
           </p>
           <br />
-          <div className="mt-6">
+          <div className="mt-6 ">
             <Link
               to="/rooms"
               className="py-3 px-3 text-emerald-500  border border-emerald-500 hover:bg-emerald-600 transition duration-500 ease-in-out hover:text-white font-bold"
+            >
+              See Our Rooms
+            </Link>
+
+            <Link
+              to="/booking"
+              className="ml-8 py-3 px-3 bg-emerald-600 text-white  hover:border hover:border-emerald-500 hover:bg-white transition duration-500 ease-in-out hover:text-emerald-500 font-bold"
             >
               Book a Stay
             </Link>

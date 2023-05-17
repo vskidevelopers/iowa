@@ -75,7 +75,7 @@ function Contact() {
                   </label>
                   <label class="block  ">
                     <span class="text-teal-600 font-serif">
-                      What type of event is it?
+                      Select the category of infomation
                     </span>
                     <select class="block w-full mt-1 border border-emerald-500 focus:border-1 focus:border-emerald-600">
                       <option>Feedback</option>

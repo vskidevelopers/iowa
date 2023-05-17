@@ -1,8 +1,14 @@
 import { BookmarkIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import AdminBookingsTable from "./AdminBookingsTable";
+import { useBookings } from "../../Utils/Firebase";
 
 function AdminBookings() {
+  const [, { bookings, loading }] = useBookings();
+
+  console.log("BOOKINGS >>", bookings);
+  console.log("Loading >>", loading);
+
   // data
   const bookingsData = [
     {
@@ -44,7 +50,7 @@ function AdminBookings() {
       </div>
       {/* Booking Table */}
       <div>
-        <AdminBookingsTable data={bookingsData} />
+        <AdminBookingsTable data={bookings ? bookings : bookingsData} />
       </div>
     </div>
   );

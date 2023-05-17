@@ -29,6 +29,8 @@ import Contact from "./Pages/Contact";
 import NotFound from "./Pages/NotFound";
 import UserUi from "./Layout/UserUi";
 import AdminEventDetails from "./Components/Admin/AdminEventDetails";
+import Booking from "./Pages/Booking";
+import AdminRoomDetails from "./Components/Admin/AdminRoomDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +39,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<UserUi />}>
         <Route index element={<Home />} />
         <Route path="menu" element={<Menu />} />
+        <Route path="booking" element={<Booking />} />
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="rooms" element={<Rooms />} />
         <Route path="rooms/:id" element={<RoomDetails />} />
@@ -54,6 +57,7 @@ const router = createBrowserRouter(
         <Route path="admin-bookings" element={<AdminBookings />} />
         <Route path="admin-gallery" element={<AdminGallery />} />
         <Route path="admin-rooms" element={<AdminRooms />} />
+        <Route path="admin-rooms/:roomId" element={<AdminRoomDetails />} />
         <Route path="admin-menu" element={<AdminMenu />} />
       </Route>
       <Route path="*" element={<NotFound />} />

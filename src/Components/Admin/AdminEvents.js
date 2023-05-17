@@ -7,6 +7,7 @@ import {
   useFetchEvents,
   useEventsImageUploader,
 } from "../../Utils/Firebase";
+import SnackBar from "../SnackBar";
 
 function AdminEvents() {
   const [file, setFile] = useState(null);
@@ -64,32 +65,42 @@ function AdminEvents() {
       Image: imageURL,
     };
     console.log("eventData >>", eventData);
-
-    addEvent(eventData);
-
-    setFormData({
-      author: "",
-      title: "",
-      startDate: "",
-      endDate: "",
-      venue: "",
-      description: "",
-      image: "",
-    });
-    setFile(null);
+    if (imageURL) {
+      console.log("IMage Url >> ", imageURL);
+      addEvent(eventData);
+      setFormData({
+        author: "",
+        title: "",
+        startDate: "",
+        endDate: "",
+        venue: "",
+        description: "",
+        image: "",
+      });
+      setFile(null);
+    } else {
+      console.log("No IMage  ");
+      alert(
+        "An error occured during image upload. Try submitting the form again"
+      );
+    }
   };
 
   return (
     <div>
       <div className="bg-white shadow-lg shadow-gray-200 rounded-2xl p-4 mt-6">
+        {/* SnackBar */}
+        {loading && <SnackBar status="Loading" />}
+        {error && <SnackBar status="Error" message={error.message} />}
+        {success && (
+          <SnackBar status="Success" message="Event Added Successfully!" />
+        )}
+        {/* snackBar end */}
         <div className="flex items-center mb-5">
           <CalendarIcon className="h-5 w-5 text-teal-600 mr-3" />
           <h2 className=" font-medium font-serif text-3xl md:text-2xl text-slate-900 ">
             Add a new Event
           </h2>
-          {loading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {success && <p>Event added successfully!</p>}
         </div>
         {/* Add Event Form */}
         <form onSubmit={handleSubmit}>

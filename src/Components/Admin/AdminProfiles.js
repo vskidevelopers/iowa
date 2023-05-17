@@ -1,4 +1,5 @@
 import React from "react";
+import Img1 from "../../Assets/Imgs/Discovery1.jpg";
 
 function AdminProfiles() {
   return (
@@ -12,7 +13,7 @@ function AdminProfiles() {
             <div className="flex-none w-auto max-w-full px-3">
               <div className=" h-20 w-20 text-base ease-soft-in-out  relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
                 <img
-                  src="https://demos.creative-tim.com/soft-ui-dashboard-pro-tailwind/assets/img/bruce-mars.jpg"
+                  src={Img1}
                   alt="profile_image"
                   className="w-full shadow-soft-sm rounded-xl "
                 />
@@ -20,7 +21,7 @@ function AdminProfiles() {
             </div>
             <div className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
-                <h5 className="mb-1 text-emerald-500">Alec Thompson</h5>
+                <h5 className="mb-1 text-emerald-500">Susan Rienye</h5>
                 <p className="mb-0 font-semibold leading-normal text-sm text-slate-500 dark:opacity-60">
                   CEO / Co-Founder
                 </p>

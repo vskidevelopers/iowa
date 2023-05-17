@@ -57,7 +57,7 @@ export default function AdminEventCard({ event }) {
         <div class="mt-2">
           <Link
             class="text-2xl text-gray-700 font-bold hover:text-gray-600"
-            to="/"
+            to={`${event?.id}`}
           >
             {event?.Title}
           </Link>
