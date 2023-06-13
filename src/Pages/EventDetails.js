@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CalendarIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import HeroSection from "../Components/HeroSection";
 import Calendar from "../Components/Calendar";
 import EventDetailTag from "../Components/EventDetailTag";
+import { useParams } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../Utils/Firebase";
 
 function EventDetails() {
-  const [image] = useState(
-    "https://img.uefa.com/imgml/stadium/matchinfo/w1/85441.jpg?imwidth=5000"
-  );
-  const [title] = useState("Man City and Bayern Clash at Munich");
+  const [event, setEvent] = useState({});
+  const { id } = useParams();
+  useEffect(() => {
+    const getEvent = async () => {
+      const eventRef = doc(db, "Events", id);
+      const eventSnap = await getDoc(eventRef);
+      if (eventSnap.exists()) {
+        setEvent(eventSnap.data());
+        console.log("eventSnap >>", eventSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    };
+
+    getEvent();
+  }, [id]);
+
   return (
     <div>
       <HeroSection
@@ -21,22 +37,17 @@ function EventDetails() {
           <div className="px-3 md:col-span-2">
             <div className="w-full h-auto mb-4">
               <img
-                src={image}
-                alt={title}
+                src={event?.Image}
+                alt={event?.Title}
                 className="w-full object-cover object-center rounded shadow-md"
               />
             </div>
 
             <div className="mb-4">
               <h2 className="text-gray-500 text-3xl font-serif mb-4">
-                {title}
+                {event?.Title}
               </h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                modi excepturi hic ratione, iste doloremque quam assumenda in
-                distinctio officiis! Molestias fuga minima fugiat. Tenetur nobis
-                quaerat eum veniam quidem?
-              </p>
+              <p>{event?.Description}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -49,13 +60,13 @@ function EventDetails() {
               {/* Date */}
               <EventDetailTag
                 heading="Event Date"
-                subHeading="25 DECEMBER, 2022"
+                subHeading={event?.Start_date}
                 icon={<CalendarIcon className="h-3 w-3 text-white" />}
               />
               {/* Location*/}
               <EventDetailTag
                 heading="Event Location"
-                subHeading="Bar Area"
+                subHeading={event?.Venue}
                 icon={<MapPinIcon className="h-3 w-3 text-white" />}
               />
             </div>

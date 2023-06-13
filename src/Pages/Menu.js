@@ -1,9 +1,17 @@
 import React from "react";
 import HeroSection from "../Components/HeroSection";
 import MenuItem from "../Components/MenuItem";
+import { useMenuFunctions } from "../Utils/Firebase";
 import ParallaxDivider from "../Components/ParallaxDivider";
 
 function Menu() {
+  const { breakfastMenu, mainCourseMenu, saladsMenu, drinksMenu } =
+    useMenuFunctions();
+  console.log(breakfastMenu);
+  console.log(mainCourseMenu);
+  console.log(saladsMenu);
+  console.log(drinksMenu);
+
   const image =
     "https://firebasestorage.googleapis.com/v0/b/iowa-a4fe8.appspot.com/o/galleryPage%2FDSC_0970-min.jpg?alt=media&token=918aca9b-6464-422a-9ee6-6b830bc74ae7";
   return (
@@ -19,10 +27,9 @@ function Menu() {
           {/* food-grid block*/}
           <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
             {/* menu Item */}
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+            {breakfastMenu.map((item, i) => (
+              <MenuItem key={i} item={item} />
+            ))}
           </div>
         </div>
         {/* Main Course */}
@@ -34,10 +41,9 @@ function Menu() {
           {/* food-grid block*/}
           <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
             {/* menu Item */}
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+            {mainCourseMenu.map((item, i) => (
+              <MenuItem key={i} item={item} />
+            ))}
           </div>
         </div>
         {/* Salads */}
@@ -49,10 +55,9 @@ function Menu() {
           {/* food-grid block*/}
           <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
             {/* menu Item */}
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+            {saladsMenu.map((item, i) => (
+              <MenuItem key={i} item={item} />
+            ))}
           </div>
         </div>
         {/* Drinks */}
@@ -64,10 +69,9 @@ function Menu() {
           {/* food-grid block*/}
           <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
             {/* menu Item */}
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
-            <MenuItem />
+            {drinksMenu.map((item, i) => (
+              <MenuItem key={i} item={item} />
+            ))}
           </div>
         </div>
       </div>

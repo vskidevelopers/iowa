@@ -58,6 +58,13 @@ const Sidebar = () => {
             Menu
           </Link>
           <Link
+            to="admin-signup"
+            className="flex items-center px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-600"
+          >
+            <UserIcon className="h-4 w-4 text-gray-300 mr-2" />
+            Create a User
+          </Link>
+          <Link
             to="/"
             className="flex items-center px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-600"
           >

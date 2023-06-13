@@ -1,5 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { useState, useEffect } from "react";
 import {
   getStorage,
@@ -33,6 +38,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 const storage = getStorage();
+const auth = getAuth(app);
 
 // fetch firebase storage images
 export function useFirebaseStorageImages() {
@@ -639,4 +645,56 @@ export const useGalleryFunctions = () => {
   };
 
   return { addGalleryImage, deleteGalleryImage, imageURL, images };
+};
+
+// AUTHENTICATION
+export const useAuth = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Set up an observer to listen for authentication state changes
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // User is signed in
+        setUser(authUser);
+      } else {
+        // User is signed out
+        setUser(null);
+      }
+    });
+
+    // Clean up the observer when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  const login = async (email, password) => {
+    try {
+      // Authenticate the user with the provided email and password
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setUser(userCredential.user);
+      // Optionally perform any additional actions after successful login
+    } catch (error) {
+      // Handle authentication errors
+      console.error("Login failed", error);
+    }
+  };
+
+  const signup = async (email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setUser(userCredential.user);
+    } catch (err) {
+      console.error("failed to create a user >>", err);
+    }
+  };
+
+  return { user, login, signup };
 };

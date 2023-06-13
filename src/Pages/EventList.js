@@ -1,8 +1,14 @@
 import React from "react";
 import HeroSection from "../Components/HeroSection";
 import EventCard from "../Components/EventCard";
+import { useFetchEvents } from "../Utils/Firebase";
+import SnackBar from "../Components/SnackBar";
 
 function EventList() {
+  const { eventsLoading, events } = useFetchEvents();
+
+  console.log("EVENTS from event list >>", events);
+
   return (
     <div>
       <HeroSection
@@ -12,20 +18,17 @@ function EventList() {
       {/* Event List Body */}
       <div className="container mx-auto mt-28 px-20 my-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <EventCard
-            id="1"
-            date="25 August, 2022"
-            title="UEFA SEMI FINALS"
-            details="The last Bundesliga club to defeat the Cityzens over two legs were Hamburg in the 2008/09 UEFA Cup quarter-finals. The English side have never lost a Champions League knockout tie to German opponents."
-            image="https://img.uefa.com/imgml/stadium/matchinfo/w1/85441.jpg?imwidth=5000"
-          />
-          <EventCard
-            id={2}
-            date="25 August, 2022"
-            title="UEFA SEMI FINALS"
-            details="Inter are expected to name the same starting XI as in the first leg, meaning that Hakan Çalhanoğlu and Lukaku would begin on the bench with Brozović in midfield and Džeko in attack."
-            image="https://img.uefa.com/imgml/stadium/matchinfo/w1/57771.jpg?imwidth=5000"
-          />
+          {eventsLoading && <SnackBar status="Loading" />}
+          {events.map((event, i) => (
+            <EventCard
+              key={i}
+              id={event?.id}
+              date={event?.Start_date}
+              title={event?.Title}
+              details={event?.Description}
+              image={event?.Image}
+            />
+          ))}
         </div>
       </div>
     </div>

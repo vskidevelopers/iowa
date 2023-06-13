@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { LogoSvg2 } from "../Utils/Svgs";
+
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,7 +108,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/contact"
+                    to="contact"
                   >
                     Contact Us
                   </Link>
@@ -117,7 +118,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase w-max font-bold leading-snug text-teal-500 hover:opacity-75"
-                    to="/login"
+                    to="login"
                   >
                     <span className="ml-2">Login</span>
                   </Link>

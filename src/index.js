@@ -31,6 +31,8 @@ import UserUi from "./Layout/UserUi";
 import AdminEventDetails from "./Components/Admin/AdminEventDetails";
 import Booking from "./Pages/Booking";
 import AdminRoomDetails from "./Components/Admin/AdminRoomDetails";
+import Login from "./Auth/Login";
+import Signup from "./Auth/Signup";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +48,7 @@ const router = createBrowserRouter(
         <Route path="events" element={<EventList />} />
         <Route path="events/:id" element={<EventDetails />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
       </Route>
 
       {/* Admin Routes */}
@@ -59,6 +62,7 @@ const router = createBrowserRouter(
         <Route path="admin-rooms" element={<AdminRooms />} />
         <Route path="admin-rooms/:roomId" element={<AdminRoomDetails />} />
         <Route path="admin-menu" element={<AdminMenu />} />
+        <Route path="admin-signup" element={<Signup />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>
