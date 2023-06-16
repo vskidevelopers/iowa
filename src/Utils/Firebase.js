@@ -38,7 +38,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 const storage = getStorage();
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 // fetch firebase storage images
 export function useFirebaseStorageImages() {

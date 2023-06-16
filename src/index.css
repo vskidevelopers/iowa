@@ -46,3 +46,24 @@
 .swiper-button-prev:after {
   display: none;
 } */
+
+.sidebar {
+  width: 240px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+  }
+  .sidebar.closed {
+    width: 0;
+  }
+  .sidebar.closed .sidebar-toggle {
+    display: block;
+  }
+}

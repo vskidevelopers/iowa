@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../Utils/Firebase";
+import { useAuth } from "./AuthContext";
 import SnackBar from "../Components/SnackBar";
 
 export default function Login() {

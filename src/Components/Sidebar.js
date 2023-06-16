@@ -8,11 +8,25 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useAuth } from "../Auth/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const { user, logout } = useAuth();
+  console.log("CURRENT USER >>", user);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log("the following error occured during logout", error);
+    }
+  };
+
   return (
-    <div className="flex w-max h-full bg-gray-200">
+    <div className="sidebar flex w-max h-full bg-gray-200">
       <div className=" bg-gray-800 text-white h-full w-64">
         <nav className="flex flex-col mt-4 gap-2 px-2">
           <Link
@@ -64,13 +78,13 @@ const Sidebar = () => {
             <UserIcon className="h-4 w-4 text-gray-300 mr-2" />
             Create a User
           </Link>
-          <Link
-            to="/"
+          <button
+            onClick={handleLogout}
             className="flex items-center px-4 py-2 text-gray-100 bg-gray-700 hover:bg-gray-600"
           >
             <ArrowLeftOnRectangleIcon className="h-4 w-4 text-gray-300 mr-2" />
             Logout
-          </Link>
+          </button>
         </nav>
       </div>
     </div>

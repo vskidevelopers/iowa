@@ -28,12 +28,14 @@ function Rooms() {
           {/* col1 */}
           <div className="px-2 md:px-5">
             <RoomCard
+              id={cardsData[0]?.id}
               title={cardsData[0]?.title}
               imageUrl={cardsData[0]?.roomImage}
               price={cardsData[0]?.roomPrice}
               roomType={cardsData[0]?.roomType}
             />
             <RoomCard
+              id={cardsData[1]?.id}
               title={cardsData[1]?.title}
               imageUrl={cardsData[1]?.roomImage}
               price={cardsData[1]?.roomPrice}
@@ -42,22 +44,24 @@ function Rooms() {
             />
           </div>
           {/* col 2 */}
-          {/* <div className="px-2 md:px-5">
+          <div className="px-2 md:px-5">
             <RoomCard
-              title={cardsData[2].title}
-              imageUrl={cardsData[2].imageUrl}
-              price={cardsData[2].price}
-              roomType={cardsData[2].roomType}
+              id={cardsData[2]?.id}
+              title={cardsData[2]?.title}
+              imageUrl={cardsData[2]?.imageUrl}
+              price={cardsData[2]?.price}
+              roomType={cardsData[2]?.roomType}
               small={true}
             />
 
             <RoomCard
-              title={cardsData[3].title}
-              imageUrl={cardsData[3].imageUrl}
-              price={cardsData[3].price}
-              roomType={cardsData[3].roomType}
+              id={cardsData[3]?.id}
+              title={cardsData[3]?.title}
+              imageUrl={cardsData[3]?.imageUrl}
+              price={cardsData[3]?.price}
+              roomType={cardsData[3]?.roomType}
             />
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

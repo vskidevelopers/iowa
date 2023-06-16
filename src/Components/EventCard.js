@@ -18,24 +18,26 @@ function EventCard({ id, date, title, details, image }) {
       </div>
 
       <div className="relative px-4 -mt-16  ">
-        <div className="bg-white p-6 rounded-lg shadow-lg">
-          <div className="flex items-baseline ">
-            <h2 className="text-teal-600 font-semibold tracking-wider">
-              {formattedDate}
-            </h2>
-          </div>
+        <Link to={`/events/${id}`}>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="flex items-baseline ">
+              <h2 className="text-teal-600 font-semibold tracking-wider">
+                {formattedDate}
+              </h2>
+            </div>
 
-          <h4 className="mt-1 text-md font-semibold uppercase leading-tight truncate">
-            {title}
-          </h4>
+            <h4 className="mt-1 text-md font-semibold uppercase leading-tight truncate">
+              {title}
+            </h4>
 
-          <div className="mt-3 h-28 overflow-hidden  ">
-            <Truncate str={details} n="75" />{" "}
-            <Link to={`/events/${id}`}>
-              <strong>Read More </strong>
-            </Link>
+            <div className="mt-3 h-28 overflow-hidden  ">
+              <Truncate str={details} n="75" />{" "}
+              <Link to={`/events/${id}`}>
+                <strong>Read More </strong>
+              </Link>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -8,16 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import AdminDashboard from "./Components/Admin/AdminDashboard";
 
-//PAGES
-import AdminBookings from "./Components/Admin/AdminBookings";
-import AdminHome from "./Components/Admin/AdminHome";
-import AdminProfiles from "./Components/Admin/AdminProfiles";
-import AdminEvents from "./Components/Admin/AdminEvents";
-import AdminGallery from "./Components/Admin/AdminGallery";
-import AdminRooms from "./Components/Admin/AdminRooms";
-import AdminMenu from "./Components/Admin/AdminMenu";
 import Menu from "./Pages/Menu";
 import Home from "./Pages/Home";
 import Rooms from "./Pages/Rooms";
@@ -28,11 +19,25 @@ import EventDetails from "./Pages/EventDetails";
 import Contact from "./Pages/Contact";
 import NotFound from "./Pages/NotFound";
 import UserUi from "./Layout/UserUi";
-import AdminEventDetails from "./Components/Admin/AdminEventDetails";
 import Booking from "./Pages/Booking";
+
+import AdminBookings from "./Components/Admin/AdminBookings";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import AdminEventDetails from "./Components/Admin/AdminEventDetails";
+import AdminEvents from "./Components/Admin/AdminEvents";
+import AdminGallery from "./Components/Admin/AdminGallery";
+import AdminHome from "./Components/Admin/AdminHome";
+import AdminMenu from "./Components/Admin/AdminMenu";
+import AdminProfiles from "./Components/Admin/AdminProfiles";
 import AdminRoomDetails from "./Components/Admin/AdminRoomDetails";
+import AdminRooms from "./Components/Admin/AdminRooms";
+
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
+
+import { AuthProvider } from "./Auth/AuthContext";
+
+// import ProtectedRoutes from "./Auth/ProtectedRoutes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -72,7 +77,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
 

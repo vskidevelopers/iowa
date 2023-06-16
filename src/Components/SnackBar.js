@@ -1,3 +1,4 @@
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { useState } from "react";
 
@@ -15,10 +16,13 @@ export default function SnackBar({ status, message }) {
             <span className="text-xs text-gray-100">{message}</span>
           </div>
           <button
-            className="px-4 flex items-center text-xs uppercase tracking-wide text-white border-white"
+            className="px-2  flex items-center text-xs uppercase tracking-wide text-white border-white"
             onClick={handleClose}
           >
-            Dismiss
+            <span className="hidden sm:inline">Dismiss</span>
+            <span className="sm:hidden">
+              <XMarkIcon className="h-5 w-5 text-white " />
+            </span>
           </button>
         </div>
       )}
