@@ -36,6 +36,7 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 
 import { AuthProvider } from "./Auth/AuthContext";
+import About from "./Pages/About";
 
 // import ProtectedRoutes from "./Auth/ProtectedRoutes";
 
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<UserUi />}>
         <Route index element={<Home />} />
         <Route path="menu" element={<Menu />} />
+        <Route path="about" element={<About />} />
         <Route path="booking" element={<Booking />} />
         <Route path="gallery" element={<GalleryPage />} />
         <Route path="rooms" element={<Rooms />} />

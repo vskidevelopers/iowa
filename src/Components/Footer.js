@@ -7,8 +7,22 @@ import {
   EnvelopeIcon,
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
+import { useForm } from "react-hook-form";
+import { useEmail } from "../Utils/Firebase";
 
 function Footer({ comingSoon }) {
+  const { register, handleSubmit, reset } = useForm();
+  const { loading, postEmail } = useEmail();
+
+  const onSubmit = (data) => {
+    console.log("Email DATA >>", data);
+    postEmail(data);
+    alert(
+      "We've Recieved your message. We will reach back as soon as possible"
+    );
+    reset();
+  };
+
   return (
     <div className="w-full bg-slate-900/50">
       <div className="container px-5 md:py-10 md:mx-auto grid md:grid-cols-3 grid-cols-1 gap-6">
@@ -55,12 +69,16 @@ function Footer({ comingSoon }) {
         </div>
 
         <div>
-          <form action="" className="space-y-4 mb-10 md:mb-5">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 mb-10 md:mb-5"
+          >
             <div>
-              <label className="sr-only" for="name">
+              <label className="sr-only" htmlFor="name">
                 Name
               </label>
               <input
+                {...register("name")}
                 className="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Name"
                 type="text"
@@ -70,10 +88,11 @@ function Footer({ comingSoon }) {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="sr-only" for="email">
+                <label className="sr-only" htmlFor="email">
                   Email
                 </label>
                 <input
+                  {...register("email")}
                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Email address"
                   type="email"
@@ -82,10 +101,11 @@ function Footer({ comingSoon }) {
               </div>
 
               <div>
-                <label className="sr-only" for="phone">
+                <label className="sr-only" htmlFor="phone">
                   Phone
                 </label>
                 <input
+                  {...register("phone")}
                   className="w-full rounded-lg border-gray-200 p-3 text-sm"
                   placeholder="Phone Number"
                   type="tel"
@@ -95,11 +115,12 @@ function Footer({ comingSoon }) {
             </div>
 
             <div>
-              <label className="sr-only" for="message">
+              <label className="sr-only" htmlFor="message">
                 Message
               </label>
 
               <textarea
+                {...register("message")}
                 className="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Enter Your Message"
                 rows="3"
@@ -109,11 +130,11 @@ function Footer({ comingSoon }) {
 
             <div className="mt-4">
               <button
-                onClick={comingSoon}
+                disabled={loading}
                 type="submit"
                 className="py-3 w-full px-9  text-white  border border-emerald-400 bg-emerald-400 hover:bg-emerald-800 transition duration-500 ease-in-out -500 font-bold"
               >
-                Email Us Today!
+                {loading ? "Sending" : "Email Us Today!"}
               </button>
             </div>
           </form>

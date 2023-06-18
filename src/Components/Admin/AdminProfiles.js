@@ -36,58 +36,63 @@ function AdminProfiles() {
               <dt class="text-lg font-medium text-gray-900">About me</dt>
               <dd class="mt-1 space-y-3 max-w-prose text-sm text-gray-500">
                 <p>
-                  Dedicated, passionate, and accomplished Full Stack Developer
-                  with 9+ years of progressive experience working as an
-                  Independent Contractor for Google and developing and growing
-                  my educational social network that helps others learn
-                  programming, web design, game development, networking.
+                  I'm Susan Rienye, the CEO of Iowa Eateries Hotel. With a deep
+                  passion for hospitality, I lead our team to deliver
+                  exceptional guest experiences and maintain our reputation for
+                  excellence. I prioritize creating a welcoming atmosphere and
+                  ensuring every guest's stay is memorable. I actively
+                  contribute to the community, forging strong partnerships and
+                  promoting tourism.
                 </p>
                 <p>
-                  Aside from my job, I like to create and contribute to open
-                  source projects. That helps me to learn a ton of new stuff,
-                  grow as a developer and support other open source projects.
+                  As a leader, I empower my team, foster a positive work
+                  culture, and champion sustainable business practices. At Iowa
+                  Eateries Hotel, we strive to exceed expectations and provide
+                  unforgettable experiences for our guests.
                 </p>
               </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Education</dt>
               <dd class="text-sm font-semibold text-gray-900">
-                Thomas Jeff High School, Stanford University
+                {`<< Add educational info here >>`}
               </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Work History</dt>
               <dd class="text-sm font-semibold text-gray-900">
-                Twitch, Google, Apple
+                {`<< Add work info here >>`}
               </dd>
             </div>
-            <div>
-              <dt class="text-sm font-medium text-gray-500">Join Date</dt>
-              <dd class="text-sm font-semibold text-gray-900">12-09-2021</dd>
-            </div>
+
             <div>
               <dt class="text-sm font-medium text-gray-500">Languages</dt>
               <dd class="text-sm font-semibold text-gray-900">
-                English, German, Italian, Spanish
+                English, {`<< Add more Languages here >>`}
               </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Organization</dt>
-              <dd class="text-sm font-semibold text-gray-900">Bergside Inc.</dd>
+              <dd class="text-sm font-semibold text-gray-900">
+                Iowa Eateries{" "}
+                {`<< Add organisations info here if applicable >>`} .
+              </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Role</dt>
               <dd class="text-sm font-semibold text-gray-900">
-                Graphic Designer
+                Ceo Iowa Eateries
               </dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Department</dt>
-              <dd class="text-sm font-semibold text-gray-900">Marketing</dd>
+              <dd class="text-sm font-semibold text-gray-900">Management</dd>
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Birthday</dt>
-              <dd class="text-sm font-semibold text-gray-900">15-08-1990</dd>
+              <dd class="text-sm font-semibold text-gray-900">
+                {`<< Add birthday info here >>`}{" "}
+              </dd>
             </div>
           </dl>
         </div>

@@ -698,3 +698,92 @@ export const useAuth = () => {
 
   return { user, login, signup };
 };
+
+export const useEmail = () => {
+  const [emails, setEmails] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const postEmail = async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const emailRef = doc(collection(db, "Emails"));
+      await setDoc(emailRef, data);
+      console.log("Email document written with ID:", emailRef.id);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchEmails = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const querySnapshot = await getDocs(collection(db, "Emails"));
+      const emailList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setEmails(emailList);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmails();
+  }, []); // Fetch emails on component mount
+
+  return { emails, loading, error, postEmail };
+};
+
+export const useContact = () => {
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const postContact = async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const contactRef = doc(collection(db, "ContactUs"));
+      await setDoc(contactRef, data);
+      console.log("Contact document written with ID:", contactRef.id);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchContacts = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const querySnapshot = await getDocs(collection(db, "ContactUs"));
+      const contactList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setContacts(contactList);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []); // Fetch contacts on component mount
+
+  return { contacts, loading, error, postContact };
+};

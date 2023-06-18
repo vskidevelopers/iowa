@@ -2,8 +2,26 @@ import React from "react";
 import HeroSection from "../Components/HeroSection";
 import ContactTag from "../Components/ContactTag";
 import { EnvelopeIcon, PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { useForm } from "react-hook-form";
+import { useContact } from "../Utils/Firebase";
 
 function Contact() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const { loading, postContact } = useContact();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    postContact(data);
+    reset();
+    alert("We have ecieved your message! We will get back to you Soonest");
+  };
+
   return (
     <div>
       <HeroSection
@@ -54,50 +72,64 @@ function Contact() {
 
           {/* right wing */}
           <div className="mt-10 md:mt-1 w-full md:w-1/2 ">
-            <form action="">
-              <div class="px-5 md:px-20">
-                <div class="grid grid-cols-1 gap-3">
-                  <label class="block">
-                    <span class="text-teal-600 font-serif">Full name</span>
-                    <input
-                      type="text"
-                      class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
-                      placeholder="full name"
-                    />
-                  </label>
-                  <label class="block">
-                    <span class="text-teal-600 font-serif">Email address</span>
-                    <input
-                      type="email"
-                      class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
-                      placeholder="john@example.com"
-                    />
-                  </label>
-                  <label class="block  ">
-                    <span class="text-teal-600 font-serif">
-                      Select the category of infomation
-                    </span>
-                    <select class="block w-full mt-1 border border-emerald-500 focus:border-1 focus:border-emerald-600">
-                      <option>Feedback</option>
-                      <option>Booking</option>
-                      <option>Complain</option>
-                      <option>Other</option>
-                    </select>
-                  </label>
-                  <label class="block">
-                    <span class="text-teal-600 font-serif">
-                      Additional details
-                    </span>
-                    <textarea
-                      class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
-                      rows="3"
-                    ></textarea>
-                  </label>
-                  <div className="block">
-                    <button className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold">
-                      <p className="uppercase"> Submit</p>
-                    </button>
-                  </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="px-5 md:px-20">
+              <div className="grid grid-cols-1 gap-3">
+                <label className="block">
+                  <span className="text-teal-600 font-serif">Full name</span>
+                  <input
+                    {...register("fullName", { required: true })}
+                    type="text"
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    placeholder="full name"
+                  />
+                  {errors.fullName && <span>This field is required</span>}
+                </label>
+                <label className="block">
+                  <span className="text-teal-600 font-serif">
+                    Email address
+                  </span>
+                  <input
+                    {...register("email", { required: true })}
+                    type="email"
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    placeholder="john@example.com"
+                  />
+                  {errors.email && <span>This field is required</span>}
+                </label>
+                <label className="block  ">
+                  <span className="text-teal-600 font-serif">
+                    Select the category of information
+                  </span>
+                  <select
+                    {...register("category")}
+                    className="block w-full mt-1 border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                  >
+                    <option value="Feedback">Feedback</option>
+                    <option value="Booking">Booking</option>
+                    <option value="Complain">Complain</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="text-teal-600 font-serif">
+                    Additional details
+                  </span>
+                  <textarea
+                    {...register("additionalDetails")}
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    rows="3"
+                  ></textarea>
+                </label>
+                <div className="block">
+                  <button
+                    disabled={loading}
+                    type="submit"
+                    className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold"
+                  >
+                    <p className="uppercase">
+                      {loading ? "Submitting" : "Submit"}
+                    </p>
+                  </button>
                 </div>
               </div>
             </form>

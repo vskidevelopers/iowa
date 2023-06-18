@@ -20,7 +20,7 @@ function Home() {
       <HomeBanner />
       <div className="">
         <div className="md:px-20 xl:px-32  container mx-auto">
-          <IntroBanner comingSoon={comingSoon} />
+          <IntroBanner />
         </div>
       </div>
       <TimeDivider />

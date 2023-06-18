@@ -1,8 +1,9 @@
 import React from "react";
 
 import VerticalLine from "./VerticalLine";
+import { Link } from "react-router-dom";
 
-function IntroBanner({ comingSoon }) {
+function IntroBanner() {
   return (
     <div className="py-12 xl:px-24 px-3 ">
       <div className="h-1/5 w-full ">
@@ -32,12 +33,12 @@ function IntroBanner({ comingSoon }) {
       </div>
 
       <div className="flex justify-center py-5">
-        <button
-          onClick={comingSoon}
+        <Link
+          to="/about"
           className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold"
         >
           <p> Discover More</p>
-        </button>
+        </Link>
       </div>
     </div>
   );

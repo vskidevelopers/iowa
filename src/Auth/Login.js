@@ -8,21 +8,31 @@ export default function Login() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit } = useForm();
-  const { login, user } = useAuth();
+  const { login, user, loading, error } = useAuth();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     // Handle form submission here
     console.log(data);
     try {
-      await login(data.email, data.password);
-      setSuccessMessage("You have been successfully logged in.");
+      login(data.email, data.password);
       console.log("USER >", user);
-      navigate("/admin");
-    } catch (error) {
+      setSuccessMessage("You have been successfully logged in.");
+      if (!error) {
+        navigate("/admin");
+        console.log("Welcome Agent_of_doom#", user.uid);
+      }
+      // eslint-disable-next-line no-restricted-globals
+    } catch (err) {
       // Handle login error
-      console.log("Login error:", error.message);
+      console.log("Login error:", err.message);
+      setSuccessMessage(error);
     }
   };
+
+  // if (user) {
+  //   console.log("User from login rerender >>", user);
+  //   navigate("/admin");
+  // }
 
   return (
     <div className="pt-16">
@@ -84,8 +94,9 @@ export default function Login() {
                 type="submit"
                 class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
               px-4 py-3 mt-6"
+                disabled={loading}
               >
-                Log In
+                {loading ? "Sending" : "Log In"}
               </button>
             </form>
 
