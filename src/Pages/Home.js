@@ -5,10 +5,12 @@ import TimeDivider from "../Components/TimeDivider";
 import DiscoverySection from "../Components/DiscoverySection";
 import Activities from "../Components/Activities";
 import Suites from "../Components/Suites";
-import Reservation from "../Components/Reservation";
+// import Reservation from "../Components/Reservation";
 
 import Reviews from "../Components/Reviews";
 import NewsLetter from "../Components/Newsletter";
+
+import Map from "../Components/Map";
 
 function Home() {
   const comingSoon = () => {
@@ -30,7 +32,8 @@ function Home() {
         <Activities />
       </div>
       <Suites comingSoon={comingSoon} />
-      <Reservation />
+      {/* <Reservation /> */}
+      <Map />
       {/* <VideoDivider /> */}
       <Reviews />
       <NewsLetter comingSoon={comingSoon} />
