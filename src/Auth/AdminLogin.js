@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "./AuthContext";
 import SnackBar from "../Components/SnackBar";
 
-export default function Login() {
+export default function AdminLogin() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit } = useForm();
@@ -15,10 +15,12 @@ export default function Login() {
     console.log(data);
     try {
       login(data.email, data.password);
+      localStorage.setItem("isAuth", true);
       console.log("USER >", user);
       setSuccessMessage("You have been successfully logged in.");
       if (!error) {
-        navigate("/clock-in");
+        localStorage.setItem("usedAdminLogin", "true");
+        navigate("/admin");
         console.log("Welcome Agent_of_doom#", user.uid);
       }
       // eslint-disable-next-line no-restricted-globals
@@ -28,6 +30,11 @@ export default function Login() {
       setSuccessMessage(error);
     }
   };
+
+  // if (user) {
+  //   console.log("User from login rerender >>", user);
+  //   navigate("/admin");
+  // }
 
   return (
     <div className="pt-16">
@@ -42,7 +49,7 @@ export default function Login() {
 
         <div
           class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto  md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
-        flex items-center justify-center"
+          flex items-center justify-center"
         >
           <div class="w-full h-100">
             <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">
@@ -72,7 +79,7 @@ export default function Login() {
                   placeholder="Enter Password"
                   minlength="6"
                   class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-                focus:bg-white focus:outline-none"
+                  focus:bg-white focus:outline-none"
                 />
               </div>
 
@@ -88,7 +95,7 @@ export default function Login() {
               <button
                 type="submit"
                 class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
-              px-4 py-3 mt-6"
+                px-4 py-3 mt-6"
                 disabled={loading}
               >
                 {loading ? "Sending" : "Log In"}

@@ -37,6 +37,9 @@ import Signup from "./Auth/Signup";
 
 import { AuthProvider } from "./Auth/AuthContext";
 import About from "./Pages/About";
+import AdminLogin from "./Auth/AdminLogin";
+import PrivateRoutes from "./Auth/PrivateRoutes";
+import ClockIn from "./Pages/ClockIn";
 
 // import ProtectedRoutes from "./Auth/ProtectedRoutes";
 
@@ -56,20 +59,26 @@ const router = createBrowserRouter(
         <Route path="events/:id" element={<EventDetails />} />
         <Route path="contact" element={<Contact />} />
         <Route path="login" element={<Login />} />
+        <Route path="adminlogin" element={<AdminLogin />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="clock-in" element={<ClockIn />} />
+        </Route>
       </Route>
 
       {/* Admin Routes */}
-      <Route path="admin" element={<AdminDashboard />}>
-        <Route index element={<AdminHome />} />
-        <Route exact path="admin-profiles" element={<AdminProfiles />} />
-        <Route path="admin-events" element={<AdminEvents />} />
-        <Route path="admin-events/:eventId" element={<AdminEventDetails />} />
-        <Route path="admin-bookings" element={<AdminBookings />} />
-        <Route path="admin-gallery" element={<AdminGallery />} />
-        <Route path="admin-rooms" element={<AdminRooms />} />
-        <Route path="admin-rooms/:roomId" element={<AdminRoomDetails />} />
-        <Route path="admin-menu" element={<AdminMenu />} />
-        <Route path="admin-signup" element={<Signup />} />
+      <Route element={<PrivateRoutes />}>
+        <Route path="admin" element={<AdminDashboard />}>
+          <Route index element={<AdminHome />} />
+          <Route exact path="admin-profiles" element={<AdminProfiles />} />
+          <Route path="admin-events" element={<AdminEvents />} />
+          <Route path="admin-events/:eventId" element={<AdminEventDetails />} />
+          <Route path="admin-bookings" element={<AdminBookings />} />
+          <Route path="admin-gallery" element={<AdminGallery />} />
+          <Route path="admin-rooms" element={<AdminRooms />} />
+          <Route path="admin-rooms/:roomId" element={<AdminRoomDetails />} />
+          <Route path="admin-menu" element={<AdminMenu />} />
+          <Route path="admin-signup" element={<Signup />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>

@@ -136,7 +136,7 @@ export default function Navbar() {
                   </Menu>
                 ) : (
                   <Link
-                    to="/login"
+                    to="/clock-in"
                     className="text-teal-600 border-b-2 border-teal-600 px-3 py-2 text-sm font-medium hover:bg-teal-600 hover:text-white"
                   >
                     Login

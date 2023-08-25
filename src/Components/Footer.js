@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
 import { useEmail } from "../Utils/Firebase";
+import { Link } from "react-router-dom";
 
 function Footer({ comingSoon }) {
   const { register, handleSubmit, reset } = useForm();
@@ -34,12 +35,14 @@ function Footer({ comingSoon }) {
           <h1 className=" text-md font-medium text-white">Our Contacts</h1>
           <br />
           <ul className=" text-white">
-            <li className="flex items-center">
-              <span>
-                <UserIcon className="h-4 w-4 mr-3" />
-              </span>
-              Susan Rienye
-            </li>
+            <Link to="/adminLogin">
+              <li className="flex items-center">
+                <span>
+                  <UserIcon className="h-4 w-4 mr-3" />
+                </span>
+                Susan Rienye
+              </li>
+            </Link>
             <li className="flex items-center">
               <span>
                 <HomeIcon className="h-4 w-4 mr-3" />

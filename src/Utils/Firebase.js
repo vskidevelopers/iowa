@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
@@ -13,6 +14,7 @@ import {
   getDownloadURL,
   uploadBytes,
   deleteObject,
+  uploadBytesResumable,
 } from "firebase/storage";
 import {
   collection,
@@ -22,6 +24,12 @@ import {
   getDocs,
   getDoc,
   deleteDoc,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -577,28 +585,95 @@ export const useMenuFunctions = () => {
 // Add Gallery Images
 // Delete Gallery Images
 export const useGalleryFunctions = () => {
-  const [imageURL, setImageURL] = useState(" ");
+  const [galleryImageURL, setGalleryImageURL] = useState(" ");
+  const [galleryLoading, setGalleryLoading] = useState(false);
+  const [uploadGalleryImageProgress, setUploadGalleryImageProgress] =
+    useState();
   const [images, setImages] = useState([]);
 
-  const addGalleryImage = async (file) => {
+  // const addGalleryImage = async (file) => {
+  //   try {
+  //     const galleryRef = ref(storage, "galleryPage/" + file?.name);
+  //     await uploadBytes(galleryRef, file);
+  //     console.log("Uploaded Image #", file.name);
+  //     try {
+  //       const url = await getDownloadURL(galleryRef);
+  //       setImageURL(url);
+  //     } catch (err) {
+  //       console.error(
+  //         "An error Occured while fetching the download Url >>",
+  //         err
+  //       );
+  //     }
+  //   } catch (err) {
+  //     console.error(
+  //       "An error Occured while adding an image to the Gallery Page >>",
+  //       err
+  //     );
+  //   }
+  // };
+
+  const uploadGalleryImage = async (file) => {
+    // Upload file and metadata to the object 'images/mountains.jpg'
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const galleryRef = ref(storage, "galleryPage/" + file?.name);
     try {
-      const galleryRef = ref(storage, "galleryPage/" + file?.name);
-      await uploadBytes(galleryRef, file);
-      console.log("Uploaded Image #", file.name);
-      try {
-        const url = await getDownloadURL(galleryRef);
-        setImageURL(url);
-      } catch (err) {
-        console.error(
-          "An error Occured while fetching the download Url >>",
-          err
-        );
-      }
-    } catch (err) {
-      console.error(
-        "An error Occured while adding an image to the Gallery Page >>",
-        err
+      setGalleryLoading(true);
+      const uploadTask = uploadBytesResumable(galleryRef, file, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const galleryProgress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + galleryProgress + "% done");
+          setUploadGalleryImageProgress(
+            parseInt(parseFloat(galleryProgress).toFixed(0))
+          );
+
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              console.log("Default stuff");
+          }
+        },
+        (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+
+            // ...
+
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            setGalleryImageURL(downloadURL);
+            setGalleryLoading(false);
+          });
+        }
       );
+    } catch (err) {
+      console.log("the folloing error occured >>", err);
     }
   };
 
@@ -644,7 +719,14 @@ export const useGalleryFunctions = () => {
       });
   };
 
-  return { addGalleryImage, deleteGalleryImage, imageURL, images };
+  return {
+    uploadGalleryImage,
+    deleteGalleryImage,
+    galleryImageURL,
+    uploadGalleryImageProgress,
+    images,
+    galleryLoading,
+  };
 };
 
 // AUTHENTICATION
@@ -786,4 +868,88 @@ export const useContact = () => {
   }, []); // Fetch contacts on component mount
 
   return { contacts, loading, error, postContact };
+};
+
+export const useClockInFunctions = () => {
+  const [clockInSuccess, setClockInSuccess] = useState(false);
+  const [clockInError, setClockInError] = useState(null);
+  const [clockInLoading, setClockInLoading] = useState(false);
+  const [clockOutLoading, setClockOutLoading] = useState(false);
+
+  // Clock In
+  const clockIn = async () => {
+    try {
+      setClockInLoading(true);
+      const timestamp = new Date();
+      const userId = auth.currentUser.uid;
+      const userEmail = auth.currentUser.email;
+
+      // Add a new document to the "ClockInOut" collection
+      // await addDoc(collection(db, "ClockInOut"), {
+      //   userId,
+      //   timestamp,
+      //   clockType: "in",
+      // });
+      console.log("userID >>", userId);
+      console.log("user email >>", userEmail);
+      console.log("timestamp >>", timestamp);
+      console.log("clockType : In");
+
+      setClockInSuccess(true);
+    } catch (error) {
+      setClockInError(error);
+    } finally {
+      setClockInLoading(false);
+    }
+  };
+
+  // Clock Out
+  const clockOut = async () => {
+    try {
+      setClockOutLoading(true);
+      const timestamp = new Date();
+      const userId = auth.currentUser.uid;
+      const userEmail = auth.currentUser.email;
+
+      // Find the corresponding clock in record for the user
+      // const querySnapshot = await getDocs(
+      //   query(
+      //     collection(db, "ClockInOut"),
+      //     where("userId", "==", userId),
+      //     where("clockType", "==", "in"),
+      //     orderBy("timestamp", "desc"),
+      //     limit(1)
+      //   )
+      // );
+
+      // if (!querySnapshot.empty) {
+      //   const clockInRecord = querySnapshot.docs[0];
+      //   const clockInId = clockInRecord.id;
+
+      //   // Update the clock in record with the clock out timestamp
+      //   await updateDoc(doc(db, "ClockInOut", clockInId), {
+      //     clockType: "out",
+      //     timestamp,
+      //   });
+      // }
+      console.log("userID >>", userId);
+      console.log("user email >>", userEmail);
+      console.log("timestamp >>", timestamp);
+      console.log("clockType : Out");
+      localStorage.setItem("clockInTimestamp", timestamp.toISOString());
+    } catch (error) {
+      setClockInError(error);
+    } finally {
+      setClockOutLoading(false);
+    }
+  };
+
+  return {
+    clockInSuccess,
+    clockInError,
+    clockInLoading,
+    clockOutLoading,
+    clockIn,
+    clockOut,
+  };
 };
