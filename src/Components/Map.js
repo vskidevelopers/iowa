@@ -27,6 +27,8 @@ function Map() {
         title: "Iowa Eateries Mukima", // Tooltip text when you hover over the marker
       });
 
+      console.log("marker >>", marker);
+
       // You can add additional markers or other map functionality here
     });
   }, []);
