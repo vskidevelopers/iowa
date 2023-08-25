@@ -5,6 +5,8 @@ function Map() {
   const mapContainerRef = useRef(null);
 
   const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  console.log("google maps key >>", apiKey);
+
   useEffect(() => {
     // Create a loader instance
     const loader = new Loader({
