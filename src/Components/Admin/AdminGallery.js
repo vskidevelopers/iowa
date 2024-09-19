@@ -44,33 +44,8 @@ function AdminGallery() {
     alert("Uploading Files. Click Ok to continue");
     if (data.imagePoster) {
       uploadGalleryImage(data.imagePoster);
+      reset();
     }
-    // if (eventImageURL) {
-    //   console.log("Image Url >>", eventImageURL);
-    //   const eventData = {
-    //     author: data.author,
-    //     email: data.email,
-    //     phone: data.phoneNumber,
-    //     poster: eventImageURL,
-    //     description: data.description,
-    //     venue: data.venue,
-    //     title: data.title,
-    //     approved: false,
-    //     time: formattedTime,
-    //     startDate: data.startdate,
-    //     endDate: data.enddate,
-    //   };
-    //   console.log("service Data to upload >>", eventData);
-    //   handlePostUpcomingEvent(eventData);
-    //   alert("We have recieved your request. we'll be in touch shortly");
-    //   reset();
-    // } else {
-    //   console.log("No Image  ");
-    //   alert("Uploading Files. Click Ok to continue");
-    //   if (data.imagePoster) {
-    //     uploadUpcomingEventPoster(data.imagePoster);
-    //   }
-    // }
   };
 
   return (
@@ -83,29 +58,6 @@ function AdminGallery() {
           </h2>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <div class="px-5 md:px-20">
-            <div class="grid grid-cols-1 gap-3">
-              <label class="flex items-center gap-10">
-                <span class="text-teal-600 font-serif">Gallery Picture</span>
-                <div
-                  {...getRootProps()}
-                  className="border-dashed border border-emerald-600 hover:border-solid hover:border-sky-500 active:bg-violet-700  focus:ring focus:ring-teal-600   md:p-2 text-center flex  items-center h-64 w-64"
-                >
-                  <input {...getInputProps()} name="image" value={file} />
-                  {file ? (
-                    <p>{file.name}</p>
-                  ) : (
-                    <div className="flex flex-col justify-center items-center">
-                      <PaperClipIcon className="h-10 w-10 text-teal-600 mb-3" />
-                      <p className="text-md">
-                        Drag and drop a file or click to upload
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </label>
-            </div>
-          </div> */}
           <div className="mb-4">
             <label
               className="block text-sm font-bold mb-2"
@@ -115,7 +67,7 @@ function AdminGallery() {
             </label>
             <div
               {...getRootProps()}
-              className="w-full border border-yellow-400 rounded py-2 px-3 cursor-pointer"
+              className="w-full border border-teal-600 rounded py-2 px-3 cursor-pointer"
             >
               <input {...getInputProps()} type="file" />
               <p>
@@ -127,7 +79,7 @@ function AdminGallery() {
           <div className="text-right">
             <button
               type="submit"
-              className="bg-yellow-400 text-white py-2 px-4 rounded"
+              className="bg-teal-600 text-white py-2 px-4 rounded"
             >
               {galleryLoading
                 ? `${uploadGalleryImageProgress} % Image uploading ...`

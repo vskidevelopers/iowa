@@ -1,40 +1,40 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuth } from "./AuthContext";
+// import { useAuth } from "./AuthContext";
 import SnackBar from "../Components/SnackBar";
+import { useAuthFunctions } from "../Utils/Firebase/firebase";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit } = useForm();
-  const { login, user, loading, error } = useAuth();
+  const { user, login, authError, authLoading } = useAuthFunctions();
 
   const onSubmit = (data) => {
     // Handle form submission here
     console.log(data);
     try {
       login(data.email, data.password);
-      localStorage.setItem("isAuth", true);
-      console.log("USER >", user);
-      setSuccessMessage("You have been successfully logged in.");
-      if (!error) {
-        localStorage.setItem("usedAdminLogin", "true");
-        navigate("/admin");
-        console.log("Welcome Agent_of_doom#", user.uid);
-      }
+
       // eslint-disable-next-line no-restricted-globals
     } catch (err) {
       // Handle login error
       console.log("Login error:", err.message);
-      setSuccessMessage(error);
+      setSuccessMessage(authError);
+    }
+
+    localStorage.setItem("isAuth", true);
+    console.log("USER >", user);
+    setSuccessMessage("You have been successfully logged in.");
+    if (!authError) {
+      localStorage.setItem("usedAdminLogin", true);
+      console.log(
+        `Welcome Agent_of_doom# ${user?.uid}. redirecting to /admin...`
+      );
+      navigate("/admin");
     }
   };
-
-  // if (user) {
-  //   console.log("User from login rerender >>", user);
-  //   navigate("/admin");
-  // }
 
   return (
     <div className="pt-16">
@@ -53,7 +53,7 @@ export default function AdminLogin() {
         >
           <div class="w-full h-100">
             <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">
-              Log in to your account
+              Log in to your Admin account
             </h1>
             {successMessage && <SnackBar status={successMessage} />}
             {user && <SnackBar status={user.email} />}
@@ -96,9 +96,9 @@ export default function AdminLogin() {
                 type="submit"
                 class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
                 px-4 py-3 mt-6"
-                disabled={loading}
+                disabled={authLoading}
               >
-                {loading ? "Sending" : "Log In"}
+                {authLoading ? "Sending" : "Log In"}
               </button>
             </form>
 

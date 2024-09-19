@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useClockInFunctions } from "../Utils/Firebase";
+import {
+  useAuthFunctions,
+  useClockInFunctions,
+} from "../Utils/Firebase/firebase";
 
 const ClockIn = () => {
+  const { user } = useAuthFunctions();
   const [clockedIn, setClockedIn] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { clockIn, clockOut } = useClockInFunctions();
@@ -42,32 +46,39 @@ const ClockIn = () => {
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
       <div className="bg-white rounded-lg p-8 shadow-lg">
         <h1 className="text-3xl font-semibold mb-4">Iowa Clock-In System</h1>
+        <p className="text-center text-gray-600 italic my-5">
+          welcome <span>{user?.email}</span>
+        </p>
         <div className="flex flex-col items-center">
           {clockedIn ? (
             <div className="mb-4">
               <p className="text-green-500 text-xl font-semibold mb-2">
                 You are Clocked In
               </p>
-              <button
-                onClick={handleClockOut}
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-semibold disabled:opacity-50"
-                disabled={!clockedIn}
-              >
-                Clock Out
-              </button>
+              <div className="w-full flex justify-center items-center">
+                <button
+                  onClick={() => handleClockOut()}
+                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-semibold disabled:opacity-50"
+                  disabled={!clockedIn}
+                >
+                  Clock Out
+                </button>
+              </div>
             </div>
           ) : (
             <div>
               <p className="text-red-500 text-xl font-semibold mb-2">
                 You are Clocked Out
               </p>
-              <button
-                onClick={handleClockIn}
-                disabled={isButtonDisabled}
-                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold"
-              >
-                Clock In
-              </button>
+              <div className="w-full flex justify-center items-center">
+                <button
+                  onClick={handleClockIn}
+                  disabled={isButtonDisabled}
+                  className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold"
+                >
+                  Clock In
+                </button>
+              </div>
             </div>
           )}
         </div>

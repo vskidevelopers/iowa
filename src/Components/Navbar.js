@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { LogoSvg2 } from "../Utils/Svgs";
-import { useAuth } from "../Auth/AuthContext";
+import { useAuthFunctions } from "../Utils/Firebase/firebase";
 
 const navigation = [
   { name: "Home", href: "", current: true },
@@ -21,14 +21,14 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthFunctions();
   console.log("CURRENT USER >>", user);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("", { replace: true });
+      navigate("/", { replace: true });
     } catch (error) {
       console.log("the following error occured during logout", error);
     }
@@ -108,7 +108,7 @@ export default function Navbar() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              to="/admin"
+                              to="/clock-in"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"

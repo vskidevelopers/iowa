@@ -35,7 +35,7 @@ function Footer({ comingSoon }) {
           <h1 className=" text-md font-medium text-white">Our Contacts</h1>
           <br />
           <ul className=" text-white">
-            <Link to="/adminLogin">
+            <Link to="/admin">
               <li className="flex items-center">
                 <span>
                   <UserIcon className="h-4 w-4 mr-3" />

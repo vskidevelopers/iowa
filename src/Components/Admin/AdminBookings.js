@@ -1,44 +1,13 @@
 import { BookmarkIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import AdminBookingsTable from "./AdminBookingsTable";
-import { useBookings } from "../../Utils/Firebase";
+import { useBookingsFunctions } from "../../Utils/Firebase/firebase";
 
 function AdminBookings() {
-  const [, { bookings, loading }] = useBookings();
+  const { bookings, bookingsLoading } = useBookingsFunctions();
 
   console.log("BOOKINGS >>", bookings);
-  console.log("Loading >>", loading);
-
-  // data
-  const bookingsData = [
-    {
-      entryNo: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "johndoe@example.com",
-      phoneNumber: "555-1234",
-      roomType: "Standard",
-      checkIn: "2022-01-01",
-      checkOut: "2022-01-05",
-      adults: 2,
-      children: 1,
-      specialRequirements: "None",
-    },
-    {
-      entryNo: 2,
-      firstName: "Jane",
-      lastName: "jay",
-      email: "janejay@example.com",
-      phoneNumber: "555-1234",
-      roomType: "Standard",
-      checkIn: "2022-01-01",
-      checkOut: "2022-01-05",
-      adults: 2,
-      children: 1,
-      specialRequirements: "None",
-    },
-    // add more bookings here
-  ];
+  console.log("Loading >>", bookingsLoading);
 
   return (
     <div>
@@ -49,8 +18,8 @@ function AdminBookings() {
         </h2>
       </div>
       {/* Booking Table */}
-      <div>
-        <AdminBookingsTable data={bookings ? bookings : bookingsData} />
+      <div className="w-full overflow-x-auto">
+        <AdminBookingsTable data={bookings} />
       </div>
     </div>
   );

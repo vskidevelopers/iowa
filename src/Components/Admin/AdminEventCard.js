@@ -79,7 +79,9 @@ export default function AdminEventCard({ event }) {
                 src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80"
                 alt="avatar"
               />
-              <h1 class="text-gray-700 font-bold">{event?.Author}</h1>
+              <h1 class="text-gray-700 font-bold">
+                {event?.Author.id ? event.Author.email : event.Author}
+              </h1>
             </Link>
           </div>
         </div>

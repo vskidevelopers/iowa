@@ -33,13 +33,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDcSgYV9MyerQjZi3KH-wRBFZydxEX11Eo",
-  authDomain: "iowa-a4fe8.firebaseapp.com",
-  projectId: "iowa-a4fe8",
-  storageBucket: "iowa-a4fe8.appspot.com",
-  messagingSenderId: "863319571454",
-  appId: "1:863319571454:web:a8bc208712b8110cad5eaf",
-  measurementId: "G-CYLHDC2PY8",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -591,28 +591,6 @@ export const useGalleryFunctions = () => {
     useState();
   const [images, setImages] = useState([]);
 
-  // const addGalleryImage = async (file) => {
-  //   try {
-  //     const galleryRef = ref(storage, "galleryPage/" + file?.name);
-  //     await uploadBytes(galleryRef, file);
-  //     console.log("Uploaded Image #", file.name);
-  //     try {
-  //       const url = await getDownloadURL(galleryRef);
-  //       setImageURL(url);
-  //     } catch (err) {
-  //       console.error(
-  //         "An error Occured while fetching the download Url >>",
-  //         err
-  //       );
-  //     }
-  //   } catch (err) {
-  //     console.error(
-  //       "An error Occured while adding an image to the Gallery Page >>",
-  //       err
-  //     );
-  //   }
-  // };
-
   const uploadGalleryImage = async (file) => {
     // Upload file and metadata to the object 'images/mountains.jpg'
     const metadata = {
@@ -882,17 +860,18 @@ export const useClockInFunctions = () => {
       setClockInLoading(true);
       const timestamp = new Date();
       const userId = auth.currentUser.uid;
-      const userEmail = auth.currentUser.email;
+      const employeeEmail = auth.currentUser.email;
 
       // Add a new document to the "ClockInOut" collection
-      // await addDoc(collection(db, "ClockInOut"), {
-      //   userId,
-      //   timestamp,
-      //   clockType: "in",
-      // });
+      await addDoc(collection(db, "ClockInOut"), {
+        userId,
+        timeIn: timestamp,
+        employeeEmail,
+        clockType: "in",
+      });
       console.log("userID >>", userId);
-      console.log("user email >>", userEmail);
-      console.log("timestamp >>", timestamp);
+      console.log("user email >>", employeeEmail);
+      console.log("time In >>", timestamp);
       console.log("clockType : In");
 
       setClockInSuccess(true);
@@ -904,41 +883,88 @@ export const useClockInFunctions = () => {
   };
 
   // Clock Out
+  // const clockOut = async () => {
+  //   try {
+  //     setClockOutLoading(true);
+  //     const timestamp = new Date();
+  //     const userId = auth.currentUser.uid;
+  //     const employeeEmail = auth.currentUser.email;
+
+  //     // Find the corresponding clock in record for the user
+  //     const querySnapshot = await getDocs(
+  //       query(
+  //         collection(db, "ClockInOut"),
+  //         where("userId", "==", userId),
+  //         where("clockType", "==", "in"),
+  //         orderBy("timestamp", "desc"),
+  //         limit(1)
+  //       )
+  //     );
+
+  //     if (querySnapshot) {
+  //       console.log("DOCUMENT FOUND!!");
+  //       const clockInRecord = querySnapshot.docs[0];
+  //       const clockInId = clockInRecord.id;
+
+  //       // Update the clock in record with the clock out timestamp
+  //       await updateDoc(doc(db, "ClockInOut", clockInId), {
+  //         clockType: "out",
+  //         timeOut: timestamp,
+  //       });
+  //     }
+  //     console.log("userID >>", userId);
+  //     console.log("user email >>", employeeEmail);
+  //     console.log("time Out >>", timestamp);
+  //     console.log("clockType : Out");
+  //     localStorage.setItem("clockInTimestamp", timestamp.toISOString());
+  //   } catch (error) {
+  //     setClockInError(error);
+  //   } finally {
+  //     setClockOutLoading(false);
+  //   }
+  // };
   const clockOut = async () => {
     try {
       setClockOutLoading(true);
       const timestamp = new Date();
       const userId = auth.currentUser.uid;
-      const userEmail = auth.currentUser.email;
+      // const employeeEmail = auth.currentUser.email;
 
       // Find the corresponding clock in record for the user
-      // const querySnapshot = await getDocs(
-      //   query(
-      //     collection(db, "ClockInOut"),
-      //     where("userId", "==", userId),
-      //     where("clockType", "==", "in"),
-      //     orderBy("timestamp", "desc"),
-      //     limit(1)
-      //   )
-      // );
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, "ClockInOut"),
+          where("userId", "==", userId),
+          where("clockType", "==", "in"),
+          orderBy("timestamp", "desc"),
+          limit(1)
+        )
+      );
 
-      // if (!querySnapshot.empty) {
-      //   const clockInRecord = querySnapshot.docs[0];
-      //   const clockInId = clockInRecord.id;
+      if (querySnapshot.docs.length === 1) {
+        const clockInRecord = querySnapshot.docs[0];
+        const clockInId = clockInRecord.id;
 
-      //   // Update the clock in record with the clock out timestamp
-      //   await updateDoc(doc(db, "ClockInOut", clockInId), {
-      //     clockType: "out",
-      //     timestamp,
-      //   });
-      // }
-      console.log("userID >>", userId);
-      console.log("user email >>", userEmail);
-      console.log("timestamp >>", timestamp);
-      console.log("clockType : Out");
-      localStorage.setItem("clockInTimestamp", timestamp.toISOString());
+        // Update the clock in record with the clock out timestamp
+        await updateDoc(doc(db, "ClockInOut", clockInId), {
+          clockType: "out",
+          timeOut: timestamp,
+        });
+
+        localStorage.setItem(
+          "clockInTimestamp",
+          timestamp.toDate().toISOString()
+        );
+        setClockInSuccess(false);
+        setClockInError(null);
+        setClockInSuccess(true);
+      } else {
+        setClockInSuccess(false);
+        setClockInError("No matching clock-in record found.");
+      }
     } catch (error) {
-      setClockInError(error);
+      setClockInSuccess(false);
+      setClockInError(error.message);
     } finally {
       setClockOutLoading(false);
     }

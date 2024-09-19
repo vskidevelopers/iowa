@@ -40,6 +40,8 @@ import About from "./Pages/About";
 import AdminLogin from "./Auth/AdminLogin";
 import PrivateRoutes from "./Auth/PrivateRoutes";
 import ClockIn from "./Pages/ClockIn";
+import Attendance from "./Components/Admin/Attendance";
+// import PrivateAdminRoutes from "./Auth/PrivateAdminRoutes";
 
 // import ProtectedRoutes from "./Auth/ProtectedRoutes";
 
@@ -77,6 +79,7 @@ const router = createBrowserRouter(
           <Route path="admin-rooms" element={<AdminRooms />} />
           <Route path="admin-rooms/:roomId" element={<AdminRoomDetails />} />
           <Route path="admin-menu" element={<AdminMenu />} />
+          <Route path="admin-Attendance" element={<Attendance />} />
           <Route path="admin-signup" element={<Signup />} />
         </Route>
       </Route>

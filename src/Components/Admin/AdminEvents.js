@@ -1,88 +1,78 @@
 import { CalendarDaysIcon, CalendarIcon } from "@heroicons/react/24/solid";
-import React, { useState } from "react";
 import AdminEventCard from "./AdminEventCard";
 import { useDropzone } from "react-dropzone";
-import {
-  useAddEvent,
-  useFetchEvents,
-  useEventsImageUploader,
-} from "../../Utils/Firebase";
+
 import SnackBar from "../SnackBar";
+import { useForm } from "react-hook-form";
+import {
+  useAuthFunctions,
+  useEventsFunctions,
+} from "../../Utils/Firebase/firebase";
 
 function AdminEvents() {
-  const [file, setFile] = useState(null);
-  const [formData, setFormData] = useState({
-    author: "Iowa Management",
-    title: "",
-    startDate: "",
-    endDate: "",
-    venue: "",
-    description: "",
-    image: "",
-  });
-  const { imageURL, uploadImage } = useEventsImageUploader();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    getValues,
+    reset,
+  } = useForm(); // Initialize useForm
 
-  const { author, title, startDate, endDate, venue, description, image } =
-    formData;
+  const {
+    eventImageURL,
+    allEvents,
+    eventsSuccess,
+    eventsError,
+    eventsLoading,
+    uploadEventProgress,
+    handlePostEvent,
+    uploadEventPoster,
+  } = useEventsFunctions();
 
-  const handleFileSelection = (selectedFile) => {
-    setFile(selectedFile[0]);
+  const { user } = useAuthFunctions();
+  console.log("User >>", user);
+
+  console.log("Loading?>>", eventsLoading);
+
+  const handleImageDrop = (acceptedFiles) => {
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      setValue("imagePoster", file);
+    }
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: handleFileSelection,
+    accept: "image/*",
+    multiple: false,
+    onDrop: handleImageDrop,
   });
 
-  const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    // console.log("target name", e.target.name, "Target Value ", e.target.value);
-  };
+  const onSubmit = (data) => {
+    console.log("Events Data from Form >>", data);
 
-  const [addEvent, { loading, error, success }] = useAddEvent();
-
-  const { eventsLoading, events } = useFetchEvents();
-
-  const handleImageUpload = async () => {
-    if (!file) {
-      console.log("No Image");
-      return;
-    }
-    // console.log("Uploaded Image");
-
-    await uploadImage(file);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleImageUpload();
-    const eventData = {
-      Author: author,
-      Title: title,
-      Start_date: startDate,
-      End_date: endDate,
-      Venue: venue,
-      Description: description,
-      Image: imageURL,
-    };
-    console.log("eventData >>", eventData);
-    if (imageURL) {
-      console.log("IMage Url >> ", imageURL);
-      addEvent(eventData);
-      setFormData({
-        author: "",
-        title: "",
-        startDate: "",
-        endDate: "",
-        venue: "",
-        description: "",
-        image: "",
-      });
-      setFile(null);
+    if (eventImageURL) {
+      console.log("Image Url >>", eventImageURL);
+      const eventData = {
+        Author: { id: user.uid, email: user.email },
+        Title: data.title,
+        Start_date: data.startDate,
+        End_date: data.endDate,
+        Venue: data.venue,
+        Description: data.description,
+        Image: eventImageURL,
+      };
+      console.log("Event Data to upload >>", eventData);
+      handlePostEvent(eventData);
+      alert("We have recieved your request. we'll be in touch shortly");
+      reset();
     } else {
-      console.log("No IMage  ");
-      alert(
-        "An error occured during image upload. Try submitting the form again"
-      );
+      console.log("No Image  ");
+      alert("Uploading Files. Click Ok to continue");
+      if (data.imagePoster) {
+        uploadEventPoster(data.imagePoster);
+        console.log("Uploaded Image!!");
+      }
     }
   };
 
@@ -90,9 +80,11 @@ function AdminEvents() {
     <div>
       <div className="bg-white shadow-lg shadow-gray-200 rounded-2xl p-4 mt-6">
         {/* SnackBar */}
-        {loading && <SnackBar status="Loading" />}
-        {error && <SnackBar status="Error" message={error.message} />}
-        {success && (
+        {eventsLoading && <SnackBar status="Loading" />}
+        {eventsError && (
+          <SnackBar status="Error" message={eventsError.message} />
+        )}
+        {eventsSuccess && (
           <SnackBar status="Success" message="Event Added Successfully!" />
         )}
         {/* snackBar end */}
@@ -103,92 +95,95 @@ function AdminEvents() {
           </h2>
         </div>
         {/* Add Event Form */}
-        <form onSubmit={handleSubmit}>
-          <div class="px-5 md:px-20">
-            <div class="grid grid-cols-1 gap-3">
-              <label class="block">
-                <span class="text-teal-600 font-serif">Event Name</span>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="px-5 md:px-20">
+            <div className="grid grid-cols-1 gap-3">
+              <label className="block">
+                <span className="text-teal-600 font-serif">Event Name</span>
                 <input
                   type="text"
-                  class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                  className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
                   placeholder="Enter the name of the event"
-                  name="title"
-                  value={title}
-                  onChange={onChange}
-                  required
+                  {...register("title", { required: true })}
                 />
+                {errors.title && (
+                  <p className="text-red-500">This field is required</p>
+                )}
               </label>
               <div className="flex justify-between">
-                <label class="block">
-                  <span class="text-teal-600 font-serif">Start Date</span>
+                <label className="block">
+                  <span className="text-teal-600 font-serif">Start Date</span>
                   <input
                     type="date"
-                    class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
-                    name="startDate"
-                    value={startDate}
-                    onChange={onChange}
-                    required
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    {...register("startDate", { required: true })}
                   />
+                  {errors.startDate && (
+                    <p className="text-red-500">This field is required</p>
+                  )}
                 </label>
 
-                <label class="block">
-                  <span class="text-teal-600 font-serif">End Date</span>
+                <label className="block">
+                  <span className="text-teal-600 font-serif">End Date</span>
                   <input
                     type="date"
-                    class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
-                    name="endDate"
-                    value={endDate}
-                    onChange={onChange}
-                    required
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    {...register("endDate", { required: true })}
                   />
+                  {errors.endDate && (
+                    <p className="text-red-500">This field is required</p>
+                  )}
                 </label>
 
-                <label class="block">
-                  <span class="text-teal-600 font-serif">Venue</span>
+                <label className="block">
+                  <span className="text-teal-600 font-serif">Venue</span>
                   <input
                     type="text"
-                    class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                    className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
                     placeholder="Enter Event's Venue"
-                    name="venue"
-                    value={venue}
-                    onChange={onChange}
+                    {...register("venue")}
                   />
                 </label>
               </div>
 
-              <label class="block">
-                <span class="text-teal-600 font-serif">Event Picture</span>
+              <div className="mb-4">
+                <label
+                  className="block text-sm font-bold mb-2 text-teal-600 font-serif"
+                  htmlFor="imagePoster"
+                >
+                  Image Poster:
+                </label>
                 <div
                   {...getRootProps()}
-                  className="border-dashed border border-emerald-600 md:p-2 text-center"
+                  className="border-dashed border border-emerald-600 md:p-2 text-center cursor-pointer"
                 >
-                  <input {...getInputProps()} name="image" value={image} />
-                  {file ? (
-                    <p>{file.name}</p>
-                  ) : (
-                    <div>
-                      <p className="text-sm">
-                        Drag and drop a file or click to upload
-                      </p>
-                    </div>
-                  )}
+                  <input {...getInputProps()} type="file" />
+                  <p>
+                    {getValues("imagePoster")?.name ||
+                      "Drag and drop an image here or click to browse"}
+                  </p>
                 </div>
-              </label>
+              </div>
 
-              <label class="block">
-                <span class="text-teal-600 font-serif">Event Description</span>
+              <label className="block">
+                <span className="text-teal-600 font-serif">
+                  Event Description
+                </span>
                 <textarea
-                  class="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
+                  className="mt-1 block w-full border border-emerald-500 focus:border-1 focus:border-emerald-600"
                   rows="3"
-                  name="description"
-                  value={description}
-                  onChange={onChange}
+                  {...register("description")}
                 ></textarea>
               </label>
 
               <div className="block">
-                <button className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold">
-                  <p className="uppercase"> Submit</p>
+                <button
+                  type="submit"
+                  className="py-5 px-9 text-white bg-emerald-600 md:bg-white border md:text-emerald-600 md:border-emerald-500 md:hover:bg-emerald-600 transition duration-500 ease-in-out md:hover:text-white font-bold"
+                >
+                  {eventsLoading
+                    ? `${uploadEventProgress} % Image uploading ...`
+                    : "Submit"}
                 </button>
               </div>
             </div>
@@ -205,7 +200,7 @@ function AdminEvents() {
           {eventsLoading && <p>Fetching Events. Please Wait...</p>}
         </div>
         <div>
-          {events?.map((event) => (
+          {allEvents?.map((event) => (
             <div key={event.id}>
               <AdminEventCard event={event} />
             </div>
@@ -215,5 +210,4 @@ function AdminEvents() {
     </div>
   );
 }
-
 export default AdminEvents;
