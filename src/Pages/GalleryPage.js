@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useFirebaseStorageImages } from "../Utils/Firebase";
+import { useGalleryFunctions } from "../Utils/Firebase/firebase";
 import SplashScreen from "../Components/SplashScreen";
 
 import HeroSection from "../Components/HeroSection";
@@ -15,21 +15,21 @@ function GalleryPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const images = useFirebaseStorageImages();
-  console.log("images >>", images);
+  const { allGalleryImages } = useGalleryFunctions();
+  console.log("images >>", allGalleryImages);
 
   let col1 = [];
   let col2 = [];
   let col3 = [];
 
-  for (let i = 0; i < images.length; i += 3) {
-    col1.push(images[i]);
+  for (let i = 0; i < allGalleryImages.length; i += 3) {
+    col1.push(allGalleryImages[i]);
   }
-  for (let i = 1; i < images.length; i += 3) {
-    col2.push(images[i]);
+  for (let i = 1; i < allGalleryImages.length; i += 3) {
+    col2.push(allGalleryImages[i]);
   }
-  for (let i = 2; i < images.length; i += 3) {
-    col3.push(images[i]);
+  for (let i = 2; i < allGalleryImages.length; i += 3) {
+    col3.push(allGalleryImages[i]);
   }
   console.log("col1 >>", col1);
   console.log("col2 >>", col2);

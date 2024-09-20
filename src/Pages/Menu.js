@@ -1,7 +1,7 @@
 import React from "react";
 import HeroSection from "../Components/HeroSection";
 import MenuItem from "../Components/MenuItem";
-import { useMenuFunctions } from "../Utils/Firebase";
+import { useMenuFunctions } from "../Utils/Firebase/firebase";
 import ParallaxDivider from "../Components/ParallaxDivider";
 
 function Menu() {

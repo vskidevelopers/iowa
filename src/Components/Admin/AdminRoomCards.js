@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useRoomDelete } from "../../Utils/Firebase";
+import { useRoomFunctions } from "../../Utils/Firebase/firebase";
 
 export default function AdminRoomCards({ room }) {
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const { deleteRoom } = useRoomDelete();
+  const { handleDeleteRoom } = useRoomFunctions();
 
   const handleRoomDelete = () => {
     setShowConfirm(true);
   };
 
   const handleConfirm = (id) => {
-    deleteRoom(id);
+    handleDeleteRoom(id);
     setShowConfirm(false);
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGalleryFunctions } from "../../Utils/Firebase";
+import { useGalleryFunctions } from "../../Utils/Firebase/firebase";
 
 export default function AdminGalleryCard({ image, i }) {
   const [showConfirm, setShowConfirm] = useState(false);

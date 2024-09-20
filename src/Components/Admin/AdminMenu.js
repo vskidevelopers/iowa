@@ -2,7 +2,7 @@ import { CakeIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import AdminMenuCard from "./AdminMenuCard";
 import { useDropzone } from "react-dropzone";
-import { useMenuFunctions } from "../../Utils/Firebase";
+import { useMenuFunctions } from "../../Utils/Firebase/firebase";
 import SnackBar from "../SnackBar";
 
 function AdminMenu() {

@@ -29,7 +29,6 @@ import {
   addDoc,
   query,
   where,
-  orderBy,
   limit,
   updateDoc,
 } from "firebase/firestore";

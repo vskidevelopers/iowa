@@ -1,18 +1,16 @@
-import React, { useState } from "react";
 import AdminGalleryCard from "./AdminGalleryCard";
-import { PaperClipIcon, PhotoIcon } from "@heroicons/react/24/solid";
+import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useDropzone } from "react-dropzone";
-import { useGalleryFunctions } from "../../Utils/Firebase";
+import { useGalleryFunctions } from "../../Utils/Firebase/firebase";
 import { useForm } from "react-hook-form";
 
 function AdminGallery() {
-  const [file, setFile] = useState(null);
   const { handleSubmit, getValues, reset, setValue } = useForm();
   const {
     uploadGalleryImage,
     uploadGalleryImageProgress,
     galleryLoading,
-    galleryImageURL,
+
     images,
   } = useGalleryFunctions();
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../Utils/Firebase";
+import { db } from "../../Utils/Firebase/firebase";
 
 export default function AdminEventDetails() {
   const [event, setEvent] = useState({});

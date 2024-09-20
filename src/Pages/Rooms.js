@@ -1,7 +1,7 @@
 import React from "react";
 import HeroSection from "../Components/HeroSection";
 import RoomCard from "../Components/RoomCard";
-import { useRoomFunctions } from "../Utils/Firebase";
+import { useRoomFunctions } from "../Utils/Firebase/firebase";
 import SnackBar from "../Components/SnackBar";
 
 function Rooms() {

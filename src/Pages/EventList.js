@@ -1,13 +1,13 @@
 import React from "react";
 import HeroSection from "../Components/HeroSection";
 import EventCard from "../Components/EventCard";
-import { useFetchEvents } from "../Utils/Firebase";
+import { useEventsFunctions } from "../Utils/Firebase/firebase";
 import SnackBar from "../Components/SnackBar";
 
 function EventList() {
-  const { eventsLoading, events } = useFetchEvents();
+  const { eventsLoading, allEvents } = useEventsFunctions();
 
-  console.log("EVENTS from event list >>", events);
+  console.log("EVENTS from event list >>", allEvents);
 
   return (
     <div>
@@ -19,7 +19,7 @@ function EventList() {
       <div className="container mx-auto mt-28 px-20 my-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {eventsLoading && <SnackBar status="Loading" />}
-          {events.map((event, i) => (
+          {allEvents.map((event, i) => (
             <EventCard
               key={i}
               id={event?.id}

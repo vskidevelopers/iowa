@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Truncate from "../../Utils/Trancate";
-import { useDeleteEvents } from "../../Utils/Firebase";
+import { useEventsFunctions } from "../../Utils/Firebase/firebase";
 
 export default function AdminEventCard({ event }) {
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const { deleteEvent } = useDeleteEvents();
+  const { handleDeleteEvent } = useEventsFunctions();
 
   const handleEventDelete = () => {
     setShowConfirm(true);
   };
 
   const handleConfirm = (id) => {
-    deleteEvent(id);
+    handleDeleteEvent(id);
     setShowConfirm(false);
   };
 

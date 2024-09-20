@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import HeroSection from "../Components/HeroSection";
 import BookingDetails from "../Components/BookingDetails";
-import { useBookings } from "../Utils/Firebase";
+import { useBookingsFunctions } from "../Utils/Firebase/firebase";
 
 export default function Booking() {
-  const [postBooking, { success, error }] = useBookings();
+  const [handlePostBooking, { bookingSucces, bookingError }] =
+    useBookingsFunctions();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -52,13 +53,13 @@ export default function Booking() {
     };
     console.log("Booking Data >>", bookingData);
 
-    postBooking(bookingData);
+    handlePostBooking(bookingData);
 
-    if (success) {
+    if (bookingSucces) {
       alert(
         "Please note that submitting a booking request does not guarantee a confirmed reservation. Our team will review your details and get in touch with you shortly to finalize your booking. We appreciate your patience and understanding."
       );
-    } else if (error) {
+    } else if (bookingError) {
       alert(
         "Opps, An error occured. Try submitting the form again after a while"
       );

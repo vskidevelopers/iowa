@@ -2,7 +2,7 @@ import { HomeIcon } from "@heroicons/react/24/solid";
 import { useDropzone } from "react-dropzone";
 import React, { useState } from "react";
 import AdminRoomCards from "./AdminRoomCards";
-import { useRoomFunctions, useRoomImageUploader } from "../../Utils/Firebase";
+import { useRoomFunctions } from "../../Utils/Firebase/firebase";
 import SnackBar from "../SnackBar";
 
 function AdminRooms() {
@@ -14,13 +14,21 @@ function AdminRooms() {
     roomDescription: "",
   };
   const [file, setFile] = useState(null);
+  const {
+    handleAddRoom,
+    uploadRoomImage,
+    roomImageURL,
+    roomError,
+    roomSuccess,
+    rooms,
+    roomsLoading,
+  } = useRoomFunctions();
+  const [roomImageUrlState] = useState(roomImageURL);
   const [formData, setFormData] = useState(initialRoomsState);
 
   const { roomType, roomPrice, roomBeds, roomDescription } = formData;
 
-  const { postRoomImage, imageURL } = useRoomImageUploader();
-  const [addRoom, { loading, error, success, rooms, roomsLoading }] =
-    useRoomFunctions();
+  // const { postRoomImage, imageURL } = useRoomImageUploader();
 
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,33 +47,33 @@ function AdminRooms() {
       console.log("No Image Selected");
       return;
     }
-    await postRoomImage(file);
+    await uploadRoomImage(file);
     console.log("Image Uploaded!");
-    console.log("Image URL >>", imageURL);
+    console.log("Image URL >>", roomImageURL);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleImageUpload();
 
-    if (imageURL) {
-      console.log("Image Url >> ", imageURL);
+    if (roomImageUrlState) {
+      console.log("Image Url >> ", roomImageUrlState);
       const roomData = {
         roomType: roomType,
         roomPrice: roomPrice,
         roomBeds: roomBeds,
-        roomImage: imageURL,
+        roomImage: roomImageUrlState,
         roomDescription: roomDescription,
       };
       console.log("roomData >>", roomData);
 
-      addRoom(roomData);
+      handleAddRoom(roomData);
       setFormData(initialRoomsState);
       setFile(null);
     } else {
       console.log("No Image  ");
       alert(
-        "An error occured during image upload. Try submitting the form again"
+        "An roomError occured during image upload. Try submitting the form again"
       );
     }
   };
@@ -75,10 +83,15 @@ function AdminRooms() {
       {/* ROOMS ENTRY FORM */}
       <div className="bg-white shadow-lg shadow-gray-200 rounded-2xl p-4 mt-6">
         {/* SnackBar */}
-        {loading && <SnackBar status="Loading" />}
-        {error && <SnackBar status="Error" message={error.message} />}
-        {success && (
-          <SnackBar status="Success" message="Event Added Successfully!" />
+        {roomsLoading && <SnackBar status="Loading" />}
+        {roomError && (
+          <SnackBar status="roomError" message={roomError.message} />
+        )}
+        {roomSuccess && (
+          <SnackBar
+            status="roomSuccess"
+            message="Event Added roomSuccessfully!"
+          />
         )}
         {/* snackBar end */}
 
@@ -179,7 +192,9 @@ function AdminRooms() {
       <div className="bg-white shadow-lg shadow-gray-200 rounded-2xl p-4 mt-6">
         {/* SnackBar */}
         {roomsLoading && <SnackBar status="Loading" />}
-        {error && <SnackBar status="Error" message={error.message} />}
+        {roomError && (
+          <SnackBar status="roomError" message={roomError.message} />
+        )}
         {/* snackBar end */}
 
         <div className="flex items-center mb-5">

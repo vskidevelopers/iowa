@@ -3,7 +3,7 @@ import HeroSection from "../Components/HeroSection";
 import ContactTag from "../Components/ContactTag";
 import { EnvelopeIcon, PhoneIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
-import { useContact } from "../Utils/Firebase";
+import { useContact } from "../Utils/Firebase/firebase";
 
 function Contact() {
   const {

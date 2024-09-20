@@ -1,9 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useBookings } from "../Utils/Firebase";
+import { useBookingsFunctions } from "../Utils/Firebase/firebase";
 
 export default function RoomBookingForm() {
-  const [postBooking, { success, error }] = useBookings();
+  const [handlePostBooking, { bookingSuccess, bookingError }] =
+    useBookingsFunctions();
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -13,12 +14,12 @@ export default function RoomBookingForm() {
 
   const onSubmit = (data) => {
     console.log(data);
-    postBooking(data);
-    if (success) {
+    handlePostBooking(data);
+    if (bookingSuccess) {
       alert(
         "Please note that submitting a booking request does not guarantee a confirmed reservation. Our team will review your details and get in touch with you shortly to finalize your booking. We appreciate your patience and understanding."
       );
-    } else if (error) {
+    } else if (bookingError) {
       alert(
         "Opps, An error occured. Try submitting the form again after a while"
       );

@@ -8,7 +8,7 @@ import {
   GlobeAltIcon,
 } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
-import { useEmail } from "../Utils/Firebase";
+import { useEmail } from "../Utils/Firebase/firebase";
 import { Link } from "react-router-dom";
 
 function Footer({ comingSoon }) {

@@ -5,7 +5,7 @@ import Calendar from "../Components/Calendar";
 import EventDetailTag from "../Components/EventDetailTag";
 import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../Utils/Firebase";
+import { db } from "../Utils/Firebase/firebase";
 
 function EventDetails() {
   const [event, setEvent] = useState({});

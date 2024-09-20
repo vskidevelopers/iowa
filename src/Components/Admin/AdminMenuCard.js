@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMenuFunctions } from "../../Utils/Firebase";
+import { useMenuFunctions } from "../../Utils/Firebase/firebase";
 
 function AdminMenuCard({ category, menuItems }) {
   const [showConfirm, setShowConfirm] = useState(false);
